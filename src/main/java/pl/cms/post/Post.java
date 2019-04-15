@@ -1,5 +1,7 @@
 package pl.cms.post;
 
+import pl.cms.category.Category;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -10,15 +12,11 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
     private String content;
     private LocalDateTime created;
     private LocalDateTime updated;
-    private String image;
-
     private Long category_id;
-    private boolean moderated;
 
     public Long getId() {
         return id;
@@ -60,14 +58,6 @@ public class Post {
         this.updated = updated;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public Long getCategory_id() {
         return category_id;
     }
@@ -76,11 +66,4 @@ public class Post {
         this.category_id = category_id;
     }
 
-    public boolean isModerated() {
-        return moderated;
-    }
-
-    public void setModerated(boolean moderated) {
-        this.moderated = moderated;
-    }
 }
