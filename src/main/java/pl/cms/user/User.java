@@ -1,6 +1,10 @@
 package pl.cms.user;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -11,12 +15,17 @@ public class User {
     private Long id;
 
     @Column(name = "first_name")
+    @NotBlank(message = "Podaj imię")
     private String firstName;
 
     @Column(name = "last_name")
+    @NotBlank(message = "Podaj nazwisko")
     private String lastName;
 
+    @Email
     private String email;
+
+    @Size(min = 5, message = "Musi mieć minimum 5 znaków")
     private String password;
     private byte admin;
 

@@ -13,16 +13,15 @@
 <body>
 <div class="container">
     <header></header>
-    <header>Kategorie:<c:forEach items="${categories}" var="category"><a href="category/${category.id}"> ${category.name} </a> ||</c:forEach> </header>
-    <c:forEach items="${postList}" var="post">
+    <header>Kategorie:<c:forEach items="${categories}" var="category"><a href="/../category/${category.id}">${category.name}</a>  ||</c:forEach> </header>
 
-    <div class="card">
-        <div class="card-body">
-            <h4> <a href="postpage/${post.id}">${post.title}</a> </h4> <br>
-                    ${post.content.substring(0,300)}
-    </div>
-</div>
-</c:forEach>
+        <div class="card">
+            <div class="card-body">
+                <h4>${post.title}</h4>
+                ${post.content}<br>
+                <br><i>Data utworzenia ${post.created}</i>
+            </div>
+        </div>
 
 </div>
 </body>

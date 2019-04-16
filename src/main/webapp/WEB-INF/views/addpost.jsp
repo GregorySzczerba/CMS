@@ -13,7 +13,7 @@
 
 <%@include file="header.jspf" %>
 
-<form:form method="post" modelAttribute="post" enctype="multipart/form-data">
+<form:form method="post" modelAttribute="post" enctype="multipart/form-data" >
 
     <div class="container">
 
@@ -39,18 +39,18 @@
 
                     <div class="form-group col-md-4">
                         <label for="contentId">Treść:</label>
-                        <form:textarea rows="6" cols="30" path="content" class="form-control" id="contentId"/>
+                        <form:textarea rows="6" cols="90" path="content" class="form-control" id="contentId"/>
                     </div>
 
-                    <%--<div class="form-group col-md-4">
+                    <div class="form-group col-md-4">
                         <label for="imagesId">Dodaj zdjęcie:</label>
-                        <form:input type="file" path="image" class="form-control" id="imagesId"/>
-                    </div>--%>
+                        <form:input type="file" path="image" name ="${image.originalFilename}" class="form-control" id="imagesId"/>
+                    </div>
 
                 </div>
                 <div class="form-group">
                     <label for="categoryId">Kategoria:</label>
-                    <form:select path="category_id" items="${categories}" itemLabel="name" itemValue="id"
+                    <form:select itemValue="id" itemLabel="name" path="category.id" items="${categories}"
                                  class="form-control" id="categoryId"/>
                 </div>
 

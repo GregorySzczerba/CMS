@@ -1,6 +1,10 @@
 package pl.cms.post;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.cms.category.Category;
+import pl.cms.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,14 +13,46 @@ import java.time.LocalDateTime;
 @Table(name = "post")
 public class Post {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String content;
+
+    @CreationTimestamp
     private LocalDateTime created;
+
+    @UpdateTimestamp
     private LocalDateTime updated;
-    private Long category_id;
+    private String image;
+    private boolean moderated;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
 
     public Long getId() {
         return id;
@@ -58,12 +94,19 @@ public class Post {
         this.updated = updated;
     }
 
-    public Long getCategory_id() {
-        return category_id;
+    public String getImage() {
+        return image;
     }
 
-    public void setCategory_id(Long category_id) {
-        this.category_id = category_id;
+    public void setImage(String image) {
+        this.image = image;
     }
 
+    public boolean isModerated() {
+        return moderated;
+    }
+
+    public void setModerated(boolean moderated) {
+        this.moderated = moderated;
+    }
 }
