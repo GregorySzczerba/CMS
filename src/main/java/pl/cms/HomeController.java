@@ -28,8 +28,8 @@ public class HomeController {
         return "home";
     }
 
-    @ModelAttribute("categories")
+    /*@ModelAttribute("categories")
     public List<Category> getCategories() {
         return categoryService.findAll();
-    }
+    }*/
 }

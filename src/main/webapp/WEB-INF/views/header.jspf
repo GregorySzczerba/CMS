@@ -5,18 +5,22 @@
                 aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
                     <a class="nav-link" href="/addpost">Dodaj post</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/authors/list">Authors</a>
+                    <a class="nav-link" href="/myaccount">Moje konto</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="/publishers/list">Publishers</a>
+                    <c:choose>
+                    <c:when test="${sessionScope.isLogged == true}"><a class="nav-link" href="/logout">Wyloguj</a></c:when>
+                    <c:otherwise><a class="nav-link" href="/login">Login</a></c:otherwise>
+                    </c:choose>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Rejestracja</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -24,5 +28,6 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
+        ${sessionScope}
     </div>
 </nav>

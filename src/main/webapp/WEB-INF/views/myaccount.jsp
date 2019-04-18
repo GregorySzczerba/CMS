@@ -12,20 +12,18 @@
 </head>
 <body>
 <div class="container">
-    <header></header>
-    <header>Moje konto: </header>
 
-        <div class="card">
-            <div class="card-body">
-            Witaj ${user.firstName} ${user.lastName}
-                <br><br>
-                ${isLogged}
-
+    <header>Moje konto: Witaj ${user.firstName} ${user.lastName} ||<a href="update/${user.id}"> Edytuj Twoje dane</a> </header>
+    <header><c:forEach items="${postList}" var="post"><a href="postpage/${post.id}">${post.title}</a></header>
+            <div class="card">
+                    ${post.content.substring(0, 160)}
+                <div class="card-body">
+                    <br>
+                </div>
             </div>
-        </div>
+        </c:forEach>
 
-
-</div>
+    </div>
 </body>
 </html>
 

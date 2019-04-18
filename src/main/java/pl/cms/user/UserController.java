@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.cms.post.Post;
 import pl.cms.post.PostRepository;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -24,6 +28,23 @@ public class UserController {
 
     @Autowired
     private PostRepository postRepository;
+
+    @GetMapping("/myaccount")
+    public String myaccount(Model model, HttpSession httpSession,
+                            HttpServletRequest servletRequest, HttpServletResponse httpServletResponse) {
+        String email =  servletRequest.getSession().getAttribute("email").toString();
+        List<Post> postList = postRepository.findAllByUserEmail(email);
+        model.addAttribute("postList", postList);
+        User user = userRepository.findUserByEmail(email);
+        userRepository.save(user);
+        model.addAttribute("user", user);
+        return "myaccount";
+    }
+
+    @PostMapping("/myaccount")
+    public String account() {
+        return "myaccount";
+    }
 
     @GetMapping("/register")
     public String addUser(Model model) {
@@ -42,13 +63,33 @@ public class UserController {
         return "myaccount";
     }
 
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable Long id, Model model) {
+        User user = userRepository.findUserById(id);
+        model.addAttribute("user", user);
+        return "register";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateUser(HttpSession session, @ModelAttribute @Validated User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "register";
+        }
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        userRepository.save(user);
+        String email = user.getEmail();
+        session.setAttribute("email", email);
+        return "redirect:../myaccount";
+    }
+
+
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, Model model) {
+    public String login(@RequestParam String email, @RequestParam String password, Model model, HttpSession httpSession) {
         boolean isLogged = false;
         if (StringUtils.isBlank(email) || StringUtils.isBlank(password)) {
             model.addAttribute("isLogged", isLogged);
@@ -57,13 +98,22 @@ public class UserController {
         User user = userRepository.findUserByEmail(email);
         if (user != null) {
             isLogged = BCrypt.checkpw(password, user.getPassword());
+            httpSession.setAttribute("email", email);
         }
         if (isLogged) {
-            model.addAttribute("user", user);
-            return "myaccount";
+            httpSession.setAttribute("email", email);
+            httpSession.setAttribute("isLogged", isLogged);
+            return "redirect:myaccount";
         }
         model.addAttribute("isLogged", isLogged);
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.setAttribute("isLogged", null);
+        session.setAttribute("email", null);
+        return "redirect:/";
     }
 
    /* @GetMapping("/myaccount")

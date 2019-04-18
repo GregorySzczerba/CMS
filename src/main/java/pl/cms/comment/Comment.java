@@ -1,5 +1,6 @@
 package pl.cms.comment;
 
+import org.hibernate.annotations.CreationTimestamp;
 import pl.cms.post.Post;
 import pl.cms.user.User;
 import javax.persistence.*;
@@ -12,17 +13,23 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String content;
+
+    @CreationTimestamp
     private LocalDateTime created;
+    private String nick;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    private User user_id;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
-    @OneToOne
-    @JoinColumn(name = "post")
-    private Post post_id;
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
 
     public Long getId() {
         return id;
@@ -48,19 +55,15 @@ public class Comment {
         this.created = created;
     }
 
-    public User getUser_id() {
-        return user_id;
+    public String getNick() {
+        return nick;
     }
 
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
-    public Post getPost_id() {
-        return post_id;
-    }
 
-    public void setPost_id(Post post_id) {
-        this.post_id = post_id;
-    }
+
+
 }

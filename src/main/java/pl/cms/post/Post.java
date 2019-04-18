@@ -2,10 +2,8 @@ package pl.cms.post;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.beans.factory.annotation.Autowired;
 import pl.cms.category.Category;
 import pl.cms.user.User;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -33,7 +31,9 @@ public class Post {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne
+
+
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 

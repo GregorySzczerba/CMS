@@ -19,27 +19,16 @@
 
         <header>Dodaj post</header>
 
-        <div class="card">
-            <div class="card-body">
-                <a href="/" class="btn btn-primary">Wróć</a>
-            </div>
-        </div>
-
-
-            <div class="card-header">
-                Book data
-            </div>
-
             <div class="card-body">
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-12">
                         <label for="titleId">Tytuł:</label>
                         <form:input type="text" path="title" class="form-control" id="titleId"/>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-12">
                         <label for="contentId">Treść:</label>
-                        <form:textarea rows="6" cols="90" path="content" class="form-control" id="contentId"/>
+                        <form:textarea rows="16" cols="90" path="content" class="form-control" id="contentId"/>
                     </div>
 
                     <div class="form-group col-md-4">
@@ -48,22 +37,15 @@
                     </div>
 
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-12">
                     <label for="categoryId">Kategoria:</label>
                     <form:select itemValue="id" itemLabel="name" path="category.id" items="${categories}"
                                  class="form-control" id="categoryId"/>
                 </div>
-
-                <input type="submit" value="Zapisz">
-
+                <button type="button" type="submit" class="btn btn-primary btn-lg btn-block">Wyślij</button>
             </div>
-
-
         </div>
-
     </div>
-
 </form:form>
-
 </body>
 </html>
