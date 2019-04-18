@@ -17,8 +17,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.awt.print.Book;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class PostController {
@@ -34,6 +34,14 @@ public class PostController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping("admin/accept/{id}")
+    public String accept(@PathVariable Long id) {
+        Post post = postRepository.findPostById(id);
+        post.setModerated(true);
+        postRepository.save(post);
+        return "redirect:/admin/adminaccount";
+    }
 
     @GetMapping("/postpage/{id}")
     public String postpage(@PathVariable Long id, Model model) {

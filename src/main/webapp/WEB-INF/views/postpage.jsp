@@ -35,7 +35,7 @@
     </c:forEach>
 
 </div>
-<form:form method="post" modelAttribute="comment" action="comment">
+<form:form method="post" modelAttribute="comment">
     <div class="container">
         <header>Dodaj komentarz</header>
         <div class="card">

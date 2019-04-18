@@ -83,7 +83,7 @@ public class UserController {
         userRepository.save(user);
         String email = user.getEmail();
         session.setAttribute("email", email);
-        return "redirect:../logout";
+        return "redirect:../myaccount";
     }
 
 
@@ -135,10 +135,10 @@ public class UserController {
         if (isLoggedAdmin) {
             httpSession.setAttribute("email", email);
             httpSession.setAttribute("isLoggedAdmin", isLoggedAdmin);
-            return "redirect:/..myaccount";
+            return "/admin/myaccount";
         }
         model.addAttribute("isLoggedAdmin", isLoggedAdmin);
-        return "admin/login";
+        return "/admin/login";
     }
 
     @GetMapping("/logout")
@@ -153,6 +153,13 @@ public class UserController {
         session.setAttribute("isLoggedAdmin", null);
         session.setAttribute("email", null);
         return "redirect:/";
+    }
+
+    @GetMapping("admin/adminaccount")
+    public String myaccount(Model model) {
+        List<Post> postList = postRepository.findAllByModeratedIsFalse();
+        model.addAttribute("postList", postList);
+        return "admin/adminaccount";
     }
 
    /* @GetMapping("/myaccount")
