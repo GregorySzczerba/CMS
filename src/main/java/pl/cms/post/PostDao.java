@@ -8,7 +8,5 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 public class PostDao {
-
-
 }
 

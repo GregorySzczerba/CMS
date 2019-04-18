@@ -18,7 +18,7 @@ public class CategoryController {
 
     @GetMapping("/category/{id}")
     public String category(@PathVariable Long id, Model model) {
-        List<Post> posts = postRepository.findAllByCategoryId(id);
+        List<Post> posts = postRepository.findAllByCategoryIdAndModeratedIsTrue(id);
         model.addAttribute("posts", posts);
         return "category";
     }

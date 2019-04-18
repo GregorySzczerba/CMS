@@ -22,6 +22,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByUserEmail(String email);
 
+    List<Post> findAllByUserEmailAndModeratedIsFalse(String email);
+
+    List<Post> findAllByModeratedIsFalse();
+
     List<Post> findAllByModeratedIsTrue();
+
+    List<Post> findAllByCategoryIdAndModeratedIsTrue(Long id);
 
 }

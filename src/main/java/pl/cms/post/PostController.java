@@ -3,12 +3,21 @@ package pl.cms.post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.cms.category.Category;
 import pl.cms.category.CategoryService;
 import pl.cms.comment.Comment;
 import pl.cms.comment.CommentRepository;
+import pl.cms.user.User;
+import pl.cms.user.UserRepository;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.awt.print.Book;
 import java.util.List;
 
 @Controller
@@ -23,10 +32,14 @@ public class PostController {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/postpage/{id}")
     public String postpage(@PathVariable Long id, Model model) {
         Post post = postRepository.findPostById(id);
         model.addAttribute("comment", new Comment());
+
         model.addAttribute("post", post);
         return "postpage";
     }
@@ -38,16 +51,19 @@ public class PostController {
         return "comment";
     }
 
-    @GetMapping("/addpost")
-    public String addpost(Model model) {
+    @GetMapping("/newpost")
+    public String add(Model model) {
         model.addAttribute("post", new Post());
         return "addpost";
     }
 
-    @PostMapping("/addpost")
-    public String add(@ModelAttribute Post post) {
+    @PostMapping("/newpost")
+    public String add(@ModelAttribute @Validated Post post, BindingResult result)   {
+        if (result.hasErrors()) {
+            return "addpost";
+        }
         postRepository.save(post);
-        return "addpost";
+        return "redirect:myaccount";
     }
 
     /*@RequestMapping(value = "/addpost", method = RequestMethod.POST)
@@ -65,6 +81,14 @@ public class PostController {
     public List<Comment> getComments(Post post) {
         Long id = post.getId();
         return commentRepository.findAllByPostId(id);
+    }
+
+    @ModelAttribute("user")
+    public User getUser(HttpSession session, ServletRequest servletRequest, ServletResponse servletResponse) {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        String email = request.getSession().getAttribute("email").toString();
+        System.out.println(email);
+        return userRepository.findUserByEmail(email);
     }
 
 

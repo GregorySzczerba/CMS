@@ -35,6 +35,9 @@ public class UserController {
         String email =  servletRequest.getSession().getAttribute("email").toString();
         List<Post> postList = postRepository.findAllByUserEmailAndModeratedIsTrue(email);
         model.addAttribute("postList", postList);
+
+        List<Post> postListUnmoderated = postRepository.findAllByUserEmailAndModeratedIsFalse(email);
+        model.addAttribute("postListUnmoderated", postListUnmoderated);
         User user = userRepository.findUserByEmail(email);
         model.addAttribute("user", user);
         userRepository.save(user);
@@ -80,7 +83,7 @@ public class UserController {
         userRepository.save(user);
         String email = user.getEmail();
         session.setAttribute("email", email);
-        return "redirect:../myaccount";
+        return "redirect:../logout";
     }
 
 

@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/addpost", "/myaccount"})
+@WebFilter(urlPatterns = {"/newpost", "/myaccount"})
 public class LoginFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -14,7 +14,7 @@ public class LoginFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
+             HttpServletRequest request = (HttpServletRequest) servletRequest;
         if((request.getSession().getAttribute("isLogged") != null) || (request.getSession().getAttribute("isLoggedAdmin") != null)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {

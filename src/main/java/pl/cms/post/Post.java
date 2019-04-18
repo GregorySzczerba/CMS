@@ -24,7 +24,6 @@ public class Post {
 
     @UpdateTimestamp
     private LocalDateTime updated;
-    private String image;
     private boolean moderated;
 
     @ManyToOne
@@ -33,7 +32,7 @@ public class Post {
 
 
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -92,14 +91,6 @@ public class Post {
 
     public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public boolean isModerated() {

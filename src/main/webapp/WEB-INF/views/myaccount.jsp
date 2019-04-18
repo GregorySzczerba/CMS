@@ -7,24 +7,37 @@
 <link href="<c:url value="/resources/css/main.css"/>" rel="stylesheet">
 <html>
 <head>
-    <%@include file="header.jspf"%>
+    <%@include file="header.jspf" %>
 
 </head>
 <body>
 <div class="container">
-
-    <header>Moje konto: Witaj ${user.firstName} ${user.lastName} ||<a href="update/${user.id}"> Edytuj Twoje dane</a> </header>
-    <header>    Twoje zaakceptowane posty:<br>
-        <c:forEach items="${postList}" var="post"><a href="postpage/${post.id}">${post.title}</a></header>
-            <div class="card">
-                    ${post.content.substring(0, 160)}
-                <div class="card-body">
-                    <br>
-                </div>
-            </div>
-        </c:forEach>
-
+    <header></header>
+    <header>Moje konto: Witaj ${user.firstName} ${user.lastName} ||<a href="update/${user.id}"> Edytuj Twoje dane</a>
+    </header>
+    <header>Twoje posty oczekujące na moderację:  <br>
+        <c:forEach items="${postListUnmoderated}" var="postUnmoderated"><a href="postpage/${postUnmoderated.id}">${postUnmoderated.title}</a>
+    </header>
+    <div class="card">
+             ${postUnmoderated.content}
+        <div class="card-body">
+            <br>
+        </div>
     </div>
+    </c:forEach>
+    <header>Twoje zaakceptowane posty:<br>
+    <c:forEach items="${postList}" var="post"><a
+        href="postpage/${post.id}">${post.title}</a>
+    </header>
+    <div class="card">
+            ${post.content}
+        <div class="card-body">
+            <br>
+        </div>
+        </div>
+        </c:forEach>
+    </div>
+</div>
 </body>
 </html>
 

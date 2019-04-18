@@ -19,7 +19,7 @@
         <div class="card">
             <div class="card-body">
                 <h4> <a href="/../postpage/${post.id}">${post.title}</a> </h4> <br>
-                    ${post.content.substring(0,300)}
+                    ${post.content  }
             </div>
         </div>
     </c:forEach>
