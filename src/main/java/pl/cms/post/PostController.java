@@ -26,14 +26,16 @@ public class PostController {
     @GetMapping("/postpage/{id}")
     public String postpage(@PathVariable Long id, Model model) {
         Post post = postRepository.findPostById(id);
+        model.addAttribute("comment", new Comment());
         model.addAttribute("post", post);
         return "postpage";
     }
 
-    @PostMapping("/comment")
-    public String comment(Comment comment) {
+
+    @PostMapping("/postpage/comment")
+    public String comment(@ModelAttribute Comment comment) {
         commentRepository.save(comment);
-        return "redirect:postpage/";
+        return "comment";
     }
 
     @GetMapping("/addpost")
@@ -57,6 +59,12 @@ public class PostController {
     @ModelAttribute("categories")
     public List<Category> getCategories() {
         return categoryService.findAll();
+    }
+
+    @ModelAttribute("comments")
+    public List<Comment> getComments(Post post) {
+        Long id = post.getId();
+        return commentRepository.findAllByPostId(id);
     }
 
 

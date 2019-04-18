@@ -18,8 +18,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByCategoryId(Long id);
 
-    List<Post> findAllByUserId(Long id);
+    List<Post> findAllByUserEmailAndModeratedIsTrue(String email);
 
     List<Post> findAllByUserEmail(String email);
+
+    List<Post> findAllByModeratedIsTrue();
 
 }

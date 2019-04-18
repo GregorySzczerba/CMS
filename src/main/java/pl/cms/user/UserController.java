@@ -33,11 +33,12 @@ public class UserController {
     public String myaccount(Model model, HttpSession httpSession,
                             HttpServletRequest servletRequest, HttpServletResponse httpServletResponse) {
         String email =  servletRequest.getSession().getAttribute("email").toString();
-        List<Post> postList = postRepository.findAllByUserEmail(email);
+        List<Post> postList = postRepository.findAllByUserEmailAndModeratedIsTrue(email);
         model.addAttribute("postList", postList);
         User user = userRepository.findUserByEmail(email);
-        userRepository.save(user);
         model.addAttribute("user", user);
+        userRepository.save(user);
+
         return "myaccount";
     }
 
@@ -109,9 +110,44 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/admin/login")
+    public String loginAdmin() {
+        return "admin/login";
+    }
+
+    @PostMapping("/admin/login")
+    public String loginAdmin(@RequestParam String email, @RequestParam String password, Model model, HttpSession httpSession) {
+        boolean isLoggedAdmin = false;
+        if (StringUtils.isBlank(email) || StringUtils.isBlank(password)) {
+            model.addAttribute("isLoggedAdmin", isLoggedAdmin);
+            return "admin/login";
+        }
+        User user = userRepository.findUserByEmailAndAdminIsTrue(email);
+        if (user != null) {
+            isLoggedAdmin = BCrypt.checkpw(password, user.getPassword());
+            httpSession.setAttribute("email", email);
+        } else if (user == null) {
+            return "admin/login";
+        }
+        if (isLoggedAdmin) {
+            httpSession.setAttribute("email", email);
+            httpSession.setAttribute("isLoggedAdmin", isLoggedAdmin);
+            return "redirect:/..myaccount";
+        }
+        model.addAttribute("isLoggedAdmin", isLoggedAdmin);
+        return "admin/login";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.setAttribute("isLogged", null);
+        session.setAttribute("email", null);
+        return "redirect:/";
+    }
+
+    @GetMapping("admin/logout")
+    public String logoutAdmin(HttpSession session) {
+        session.setAttribute("isLoggedAdmin", null);
         session.setAttribute("email", null);
         return "redirect:/";
     }

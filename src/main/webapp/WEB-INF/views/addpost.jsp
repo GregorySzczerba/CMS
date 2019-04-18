@@ -31,18 +31,18 @@
                         <form:textarea rows="16" cols="90" path="content" class="form-control" id="contentId"/>
                     </div>
 
-                    <div class="form-group col-md-4">
+                   <%-- <div class="form-group col-md-4">
                         <label for="imagesId">Dodaj zdjęcie:</label>
                         <form:input type="file" path="image" name ="${image.originalFilename}" class="form-control" id="imagesId"/>
                     </div>
-
+--%>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="categoryId">Kategoria:</label>
                     <form:select itemValue="id" itemLabel="name" path="category.id" items="${categories}"
                                  class="form-control" id="categoryId"/>
                 </div>
-                <button type="button" type="submit" class="btn btn-primary btn-lg btn-block">Wyślij</button>
+                <button  type="submit" class="btn btn-primary btn-lg btn-block">Wyślij</button>
             </div>
         </div>
     </div>

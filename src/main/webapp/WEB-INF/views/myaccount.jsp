@@ -14,7 +14,8 @@
 <div class="container">
 
     <header>Moje konto: Witaj ${user.firstName} ${user.lastName} ||<a href="update/${user.id}"> Edytuj Twoje dane</a> </header>
-    <header><c:forEach items="${postList}" var="post"><a href="postpage/${post.id}">${post.title}</a></header>
+    <header>    Twoje zaakceptowane posty:<br>
+        <c:forEach items="${postList}" var="post"><a href="postpage/${post.id}">${post.title}</a></header>
             <div class="card">
                     ${post.content.substring(0, 160)}
                 <div class="card-body">

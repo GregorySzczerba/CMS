@@ -27,7 +27,7 @@ public class User {
 
     @Size(min = 5, message = "Musi mieć minimum 5 znaków")
     private String password;
-    private byte admin;
+    private boolean admin;
 
     public Long getId() {
         return id;
@@ -69,11 +69,11 @@ public class User {
         this.password = password;
     }
 
-    public byte getAdmin() {
+    public boolean getAdmin() {
         return admin;
     }
 
-    public void setAdmin(byte admin) {
+    public void setAdmin(boolean admin) {
         this.admin = admin;
     }
 }

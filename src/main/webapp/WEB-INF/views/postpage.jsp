@@ -23,26 +23,31 @@
                 <br><i>Data utworzenia ${post.created}</i>
             </div>
         </div>
+        <h5>Komentarze do artykułu:</h5>
+    <c:forEach items="${comments}" var="comment">
+    <div class="card">
+    <div class="card-body">
+        Nick:<strong> ${comment.nick}</strong>
+            <br>Treść komentarza: ${comment.content}
+            <br><i>Skomentowano: ${comment.created}</i>
+    </div>
+</div>
+    </c:forEach>
 
 </div>
-<form:form method="post" modelAttribute="comment">
-
+<form:form method="post" modelAttribute="comment" action="comment">
     <div class="container">
-
         <header>Dodaj komentarz</header>
-
         <div class="card">
             <div class="card-body">
-
                 <div class="form-group">
                     <label for="nickId">Nick :</label>
-                    <form:input type="text" path="nick" id="nickId" class="form-control"/>
+                    <form:input type="text" name="nick" path="nick" id="nickId" class="form-control"/>
                 </div>
-                <form:input  type="number" name="post" path="post"/>
+                <form:hidden value="${post.id}"  path="post.id"/>
                 <div class="form-group">
                     <label for="contentId">Treść:</label>
                     <form:input type="text" path="content" name="content" id="contentId" class="form-control"/>
-
                 </div>
                 <input type="submit" value="Zapisz" class="btn btn-primary">
             </div>

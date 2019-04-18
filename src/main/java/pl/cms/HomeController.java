@@ -23,13 +23,13 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        List<Post> postList = postRepository.findAll();
+        List<Post> postList = postRepository.findAllByModeratedIsTrue();
         model.addAttribute("postList", postList);
         return "home";
     }
 
-    /*@ModelAttribute("categories")
+    @ModelAttribute("categories")
     public List<Category> getCategories() {
         return categoryService.findAll();
-    }*/
+    }
 }
