@@ -32,7 +32,7 @@
                      class="form-control" id="categoryId"/>
     </div>
     <input type="submit" value="Zapisz" class="btn btn-primary">
-
+${user.id}
 </div>
 </div>
 </div>

@@ -105,7 +105,6 @@ public class UserController {
             httpSession.setAttribute("email", email);
         }
         if (isLogged) {
-            httpSession.setAttribute("email", email);
             httpSession.setAttribute("isLogged", isLogged);
             return "redirect:myaccount";
         }
@@ -135,7 +134,7 @@ public class UserController {
         if (isLoggedAdmin) {
             httpSession.setAttribute("email", email);
             httpSession.setAttribute("isLoggedAdmin", isLoggedAdmin);
-            return "/admin/myaccount";
+            return "redirect:/admin/adminaccount";
         }
         model.addAttribute("isLoggedAdmin", isLoggedAdmin);
         return "/admin/login";

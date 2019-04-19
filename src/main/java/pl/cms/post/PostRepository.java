@@ -30,4 +30,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByCategoryIdAndModeratedIsTrue(Long id);
 
+    List<Post> findAllByUserId(Long id);
+
 }

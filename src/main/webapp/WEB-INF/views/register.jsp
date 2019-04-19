@@ -99,7 +99,7 @@ comments
                     </div>
                 </div>
 
-                <input type="submit" value="Zarejestruj się" accept="class="btn btn-primary">
+                <input type="submit" type="button" value="Zarejestruj się" class="btn btn-primary btn-lg">
 
             </div>
 

@@ -23,8 +23,8 @@
     </div>
 </div>
 </c:forEach>
-    <a href="/admin/login">Moderacja</a>
-
+    <a href="/admin/login">Moderacja |</a> <a href="/admin/adminaccount">Admin panel |</a> <a href="/admin/logout">Admin logout</a>
+    ${sessionScope}
 </body>
 </html>
 

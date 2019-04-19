@@ -7,13 +7,20 @@
 <link href="<c:url value="/resources/css/main.css"/>" rel="stylesheet">
 <html>
 <head>
-    <%@include file="header.jspf" %>
+    <%@include file="../header.jspf" %>
+    <script>
+        function confirmDelete(id, title) {
+            if (confirm("Czy chcesz usunąć post \"" + title + "\"?")) {
+                window.location.href = "/admin/delete/" + id;
+            }
+        }
+    </script>
 
 </head>
 <body>
 <div class="container">
 
-    <header>Books</header>
+
 
     <div class="card">
         <div class="card-body">
@@ -33,12 +40,12 @@
                 </tr>
                 <c:forEach items="${postList}" var="post">
                     <tr>
-                        <td>${post.title}</td>
+                        <td><a href="/postpage/${post.id}">${post.title}</a></td>
                         <td>${post.user.id}</td>
                         <td>${post.created}</td>
                         <td>
                             <a href="accept/${post.id}" class="btn btn-success">Akceptuj</a>
-                            <a href="/update/${post.id}" class="btn btn-warning">Edytuj</a>
+                            <a href="../post/update/${post.id}" class="btn btn-warning">Edytuj</a>
                             <a href="#" onclick="confirmDelete(${post.id}, '${post.title}')" class="btn btn-danger">Skasuj</a>
                         </td>
                     </tr>
@@ -46,6 +53,8 @@
             </table>
         </div>
     </div>
+    <a href="/admin/login">Moderacja |</a> <a href="/admin/adminaccount">Admin panel |</a> <a href="/admin/logout">Admin logout</a>
+
 </div>
 
 </body>

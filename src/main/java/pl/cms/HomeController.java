@@ -32,4 +32,6 @@ public class HomeController {
     public List<Category> getCategories() {
         return categoryService.findAll();
     }
+
+
 }

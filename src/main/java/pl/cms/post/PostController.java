@@ -17,6 +17,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,11 +36,32 @@ public class PostController {
     @Autowired
     private UserRepository userRepository;
 
+    @GetMapping("post/update/{id}")
+    public String update(@PathVariable Long id, Model model) {
+        Post post = postRepository.findPostById(id);
+        model.addAttribute("post", post);
+        return "addpost";
+
+    }
+
+    @PostMapping("post/update/{id}")
+    public String update(@ModelAttribute Post post) {
+        postRepository.save(post);
+        return "redirect:/admin/adminaccount";
+    }
+
     @GetMapping("admin/accept/{id}")
     public String accept(@PathVariable Long id) {
         Post post = postRepository.findPostById(id);
         post.setModerated(true);
         postRepository.save(post);
+        return "redirect:/admin/adminaccount";
+    }
+
+    @GetMapping("admin/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        Post post = postRepository.findPostById(id);
+        postRepository.delete(post);
         return "redirect:/admin/adminaccount";
     }
 
@@ -53,32 +75,35 @@ public class PostController {
     }
 
 
-    @PostMapping("/postpage/comment")
+    @PostMapping("comment")
     public String comment(@ModelAttribute Comment comment) {
         commentRepository.save(comment);
-        return "comment";
+        return "redirect:/";
     }
 
     @GetMapping("/newpost")
-    public String add(Model model) {
+    public String add(@ModelAttribute @Validated Post post, Model model, HttpSession session, ServletRequest servletRequest, ServletResponse servletResponse) {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        String email = request.getSession().getAttribute("email").toString();
+        User user = userRepository.findUserByEmail(email);
+        model.addAttribute("user", user);
         model.addAttribute("post", new Post());
         return "addpost";
     }
 
     @PostMapping("/newpost")
-    public String add(@ModelAttribute @Validated Post post, BindingResult result)   {
+    public String add(@ModelAttribute @Validated Post post, Model model, BindingResult result, HttpSession session, ServletRequest servletRequest, ServletResponse servletResponse)   {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        String email = request.getSession().getAttribute("email").toString();
+        User user = userRepository.findUserByEmail(email);
+        model.addAttribute("user", user);
+        System.out.println(user);
         if (result.hasErrors()) {
             return "addpost";
         }
         postRepository.save(post);
         return "redirect:myaccount";
     }
-
-    /*@RequestMapping(value = "/addpost", method = RequestMethod.POST)
-    public String submit(@RequestParam("image") MultipartFile image, ModelMap modelMap) {
-        modelMap.addAttribute("image", image);
-        return "picture";
-    }*/
 
     @ModelAttribute("categories")
     public List<Category> getCategories() {
@@ -91,13 +116,17 @@ public class PostController {
         return commentRepository.findAllByPostId(id);
     }
 
-    @ModelAttribute("user")
-    public User getUser(HttpSession session, ServletRequest servletRequest, ServletResponse servletResponse) {
+    /*@ModelAttribute("user")
+    public User getUser(Model model, HttpSession session, ServletRequest servletRequest, ServletResponse servletResponse, User user) {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String email = request.getSession().getAttribute("email").toString();
-        System.out.println(email);
-        return userRepository.findUserByEmail(email);
-    }
-
+        if ()
+        if (request.getSession().getAttribute("email") != null) {
+            System.out.println("Nie ma takiego emaila");
+            String email = request.getSession().getAttribute("email").toString();
+            return userRepository.findUserByEmail(email);
+        }
+        return (new User );
+         }
+*/
 
 }

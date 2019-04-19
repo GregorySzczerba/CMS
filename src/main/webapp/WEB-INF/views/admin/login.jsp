@@ -7,7 +7,7 @@
 <link href="<c:url value="/resources/css/main.css"/>" rel="stylesheet">
 <html>
 <head>
-    <%@include file="header.jspf"%>
+    <%@include file="../header.jspf"%>
 
 </head>
 <body>
@@ -42,6 +42,7 @@
 
             </div>
         </div>
+        <a href="/admin/login">Moderacja |</a> <a href="/admin/adminaccount">Admin panel |</a> <a href="/admin/logout">Admin logout</a>
 
     </div>
 
