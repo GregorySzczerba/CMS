@@ -10,32 +10,31 @@
     <title>Dodaj post </title>
 </head>
 <body>
-<%@include file="header.jspf"%>
+<%@include file="header.jspf" %>
 <form:form method="post" modelAttribute="post">
-<div class="container">
-    <header>Dodaj post</header>
-    <div class="card-body">
-        <div class="form-group col-md-12">
-            <label for="titleId">Tytuł:</label>
-            <form:input type="text" path="title" class="form-control" id="titleId"/>
-        </div>
+    <div class="container">
+        <header>Dodaj post</header>
+        <div class="card-body">
+            <div class="form-group col-md-12">
+                <label for="titleId">Tytuł:</label>
+                <form:input type="text" path="title" class="form-control" id="titleId"/>
+            </div>
 
-        <div class="form-group col-md-12">
-            <label for="contentId">Treść:</label>
-            <form:textarea rows="16" cols="90" path="content" class="form-control" id="contentId"/>
+            <div class="form-group col-md-12">
+                <label for="contentId">Treść:</label>
+                <form:textarea rows="16" cols="90" path="content" class="form-control" id="contentId"/>
+            </div>
+            <form:hidden value="${user.id}" path="user.id"/>
         </div>
-     <form:hidden value="${user.id}" path="user.id"/>
+        <div class="form-group col-md-12">
+            <label for="categoryId">Kategoria:</label>
+            <form:select itemValue="id" itemLabel="name" path="category.id" items="${categories}"
+                         class="form-control" id="categoryId"/>
+        </div>
+        <input type="submit" value="Zapisz" class="btn btn-primary">
     </div>
-    <div class="form-group col-md-12">
-        <label for="categoryId">Kategoria:</label>
-        <form:select itemValue="id" itemLabel="name" path="category.id" items="${categories}"
-                     class="form-control" id="categoryId"/>
     </div>
-    <input type="submit" value="Zapisz" class="btn btn-primary">
-${user.id}
-</div>
-</div>
-</div>
+    </div>
 </form:form>
 </body>
 </html>

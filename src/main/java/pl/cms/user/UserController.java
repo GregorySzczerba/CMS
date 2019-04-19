@@ -161,6 +161,36 @@ public class UserController {
         return "admin/adminaccount";
     }
 
+    @GetMapping("admin/users")
+    public String users(Model model) {
+        List<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
+        return "admin/users";
+    }
+
+    @GetMapping("admin/user/{id}")
+    public String delete(@PathVariable Long id) {
+        User user = userRepository.findUserById(id);
+        userRepository.delete(user);
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("admin/update/{id}")
+    public String updateUser(@PathVariable Long id, Model model) {
+        User user = userRepository.findUserById(id);
+        model.addAttribute("user", user);
+        return "register";
+
+    }
+
+    @PostMapping("admin/update/{id}")
+    public String updateUser(@ModelAttribute User user, HttpSession session) {
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        userRepository.save(user);
+        String email = user.getEmail();
+        return "redirect:/admin/users";
+    }
+
    /* @GetMapping("/myaccount")
     public String myaccount(@PathVariable User user, Model model) {
         List<Post> postList = postRepository.findAllByUserId(user.getId());

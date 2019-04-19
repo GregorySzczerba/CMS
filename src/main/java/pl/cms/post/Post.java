@@ -2,6 +2,7 @@ package pl.cms.post;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.NotBlank;
 import pl.cms.category.Category;
 import pl.cms.user.User;
 import javax.persistence.*;
@@ -16,7 +17,11 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Podaj tytuł")
     private String title;
+
+    @NotBlank(message = "Nie napisałeś artykułu")
     private String content;
 
     @CreationTimestamp

@@ -82,7 +82,7 @@ public class PostController {
     }
 
     @GetMapping("/newpost")
-    public String add(@ModelAttribute @Validated Post post, Model model, HttpSession session, ServletRequest servletRequest, ServletResponse servletResponse) {
+    public String add(Model model, HttpSession httpSession, ServletRequest servletRequest, ServletResponse servletResponse) {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String email = request.getSession().getAttribute("email").toString();
         User user = userRepository.findUserByEmail(email);
@@ -92,12 +92,8 @@ public class PostController {
     }
 
     @PostMapping("/newpost")
-    public String add(@ModelAttribute @Validated Post post, Model model, BindingResult result, HttpSession session, ServletRequest servletRequest, ServletResponse servletResponse)   {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String email = request.getSession().getAttribute("email").toString();
-        User user = userRepository.findUserByEmail(email);
-        model.addAttribute("user", user);
-        System.out.println(user);
+    public String add(@ModelAttribute @Validated Post post, BindingResult result, HttpSession session, ServletRequest servletRequest, ServletResponse servletResponse)   {
+
         if (result.hasErrors()) {
             return "addpost";
         }

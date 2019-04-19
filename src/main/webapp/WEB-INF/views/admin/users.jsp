@@ -10,8 +10,8 @@
     <%@include file="../header.jspf" %>
     <script>
         function confirmDelete(id, title) {
-            if (confirm("Czy chcesz usunąć post \"" + title + "\"?")) {
-                window.location.href = "/admin/delete/" + id;
+            if (confirm("Czy chcesz usunąć user \"" + title + "\"?")) {
+                window.location.href = "/admin/user/" + id;
             }
         }
     </script>
@@ -24,8 +24,7 @@
 
     <div class="card">
         <div class="card-body">
-            <header></header>
-            <a href="/admin/users" class="btn btn-primary">Edytuj użytkowników</a>
+            <a href="/users/add" class="btn btn-primary">Add user</a>
         </div>
     </div>
 
@@ -34,20 +33,19 @@
 
             <table class="table table-hover">
                 <tr>
-                    <th>Tytuł</th>
-                    <th>User ID</th>
-                    <th>Data</th>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>email</th>
                     <th style="width: 15%">Actions</th>
                 </tr>
-                <c:forEach items="${postList}" var="post">
+                <c:forEach items="${users}" var="user">
                     <tr>
-                        <td><a href="/postpage/${post.id}">${post.title}</a></td>
-                        <td>${post.user.id}</td>
-                        <td>${post.created}</td>
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td>${user.email}</td>
                         <td>
-                            <a href="accept/${post.id}" class="btn btn-success">Akceptuj</a>
-                            <a href="../post/update/${post.id}" class="btn btn-warning">Edytuj</a>
-                            <a href="#" onclick="confirmDelete(${post.id}, '${post.title}')" class="btn btn-danger">Skasuj</a>
+                            <a href="../admin/update/${user.id}" class="btn btn-warning">Edytuj</a>
+                            <a href="#" onclick="confirmDelete(${user.id}, '${user.lastName}')" class="btn btn-danger">Skasuj</a>
                         </td>
                     </tr>
                 </c:forEach>

@@ -14,7 +14,7 @@
 <body>
 <div class="container">
     <header></header>
-    <header>Kategorie:<c:forEach items="${categories}" var="category"><a href="/../category/${category.id}">${category.name}</a>  ||</c:forEach> </header>
+    <header>Kategorie:<c:forEach items="${categories}" var="category"><a href="/../category/${category.id}"> ${category.name}</a>  ||</c:forEach> </header>
 
         <div class="card">
             <div class="card-body">
