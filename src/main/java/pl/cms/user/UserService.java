@@ -10,8 +10,19 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void save(User user) {
-        userRepository.save(user);
+    public boolean save(User user) {
+        String email = user.getEmail();
+        user = userRepository.findUserByEmail(email);
+        if (user == null) {
+            userRepository.save(user);
+            return true;
+
+        }
+        return false;
+    }
+
+    public void setEmail(String email) {
+
     }
 
 }

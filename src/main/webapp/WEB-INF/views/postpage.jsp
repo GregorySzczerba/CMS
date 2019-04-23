@@ -43,11 +43,15 @@
                 <div class="form-group">
                     <label for="nickId">Nick :</label>
                     <form:input type="text" name="nick" path="nick" id="nickId" class="form-control"/>
+                    <form:errors path="nick" element="div" cssClass="error"/>
+
                 </div>
                 <form:hidden value="${post.id}"  path="post.id"/>
                 <div class="form-group">
                     <label for="contentId">Treść:</label>
                     <form:input type="text" path="content" name="content" id="contentId" class="form-control"/>
+                    <form:errors path="content" element="div" cssClass="error"/>
+
                 </div>
                 <input type="submit" value="Zapisz" class="btn btn-primary">
             </div>

@@ -23,6 +23,7 @@ public class User {
     private String lastName;
 
     @Email
+    @NotBlank(message = "Podaj adres email")
     private String email;
 
     @Size(min = 5, message = "Musi mieć minimum 5 znaków")
@@ -58,6 +59,8 @@ public class User {
     }
 
     public void setEmail(String email) {
+
+
         this.email = email;
     }
 

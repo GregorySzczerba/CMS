@@ -87,6 +87,7 @@ comments
                     <div class="form-group col-md-12">
                         <label for="email">Email :</label>
                         <form:input type="email" path="email" class="form-control" id="email"/>
+                        <c:if test="${notUnique.equals('yes')}">Taki email jest już zarejestrowany. Podaj inny</c:if>
                         <form:errors path="email" element="div" cssClass="error"/>
                     </div>
                 </div>

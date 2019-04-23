@@ -6,7 +6,9 @@ import org.hibernate.validator.constraints.NotBlank;
 import pl.cms.category.Category;
 import pl.cms.user.User;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "post")
@@ -83,7 +85,10 @@ public class Post {
     }
 
     public LocalDateTime getCreated() {
-        return created;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String stringDate = created.format(formatter);
+        LocalDateTime formatDateTime  = LocalDateTime.parse(stringDate, formatter);
+        return formatDateTime;
     }
 
     public void setCreated(LocalDateTime created) {
@@ -91,7 +96,10 @@ public class Post {
     }
 
     public LocalDateTime getUpdated() {
-        return updated;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String stringDate = updated.format(formatter);
+        LocalDateTime formatDateTime  = LocalDateTime.parse(stringDate, formatter);
+        return formatDateTime;
     }
 
     public void setUpdated(LocalDateTime updated) {

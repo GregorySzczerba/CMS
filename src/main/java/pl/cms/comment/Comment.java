@@ -1,10 +1,12 @@
 package pl.cms.comment;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.NotBlank;
 import pl.cms.post.Post;
 import pl.cms.user.User;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "comments")
@@ -13,10 +15,14 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Wpisz treść komentarza")
     private String content;
 
     @CreationTimestamp
     private LocalDateTime created;
+
+    @NotBlank(message = "Podaj nick")
     private String nick;
 
     @ManyToOne
@@ -48,8 +54,11 @@ public class Comment {
     }
 
     public LocalDateTime getCreated() {
-        return created;
-    }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String stringDate = created.format(formatter);
+        LocalDateTime formatDateTime  = LocalDateTime.parse(stringDate, formatter);
+        return formatDateTime;
+            }
 
     public void setCreated(LocalDateTime created) {
         this.created = created;

@@ -17,6 +17,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
@@ -76,9 +77,15 @@ public class PostController {
 
 
     @PostMapping("comment")
-    public String comment(@ModelAttribute Comment comment) {
+    public String comment(@ModelAttribute @Valid Comment comment, Model model, BindingResult result) {
+        Long id = comment.getPost().getId();
+        model.addAttribute("id", id);
+
+        if (result.hasErrors()) {
+            return "redirect:postpage/{id}";
+        }
         commentRepository.save(comment);
-        return "redirect:/";
+        return "redirect:postpage/{id}";
     }
 
     @GetMapping("/newpost")

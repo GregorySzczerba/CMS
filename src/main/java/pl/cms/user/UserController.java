@@ -41,7 +41,6 @@ public class UserController {
         User user = userRepository.findUserByEmail(email);
         model.addAttribute("user", user);
         userRepository.save(user);
-
         return "myaccount";
     }
 
@@ -62,9 +61,13 @@ public class UserController {
             return "register";
         }
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-        userService.save(user);
-        model.addAttribute("user", user);
-        return "myaccount";
+        if (userService.save(user) == true) {
+            model.addAttribute("user", user);
+            return "myaccount";
+        }
+        String notUnique = "yes";
+        model.addAttribute("notUnique", notUnique);
+        return "register";
     }
 
     @GetMapping("/update/{id}")

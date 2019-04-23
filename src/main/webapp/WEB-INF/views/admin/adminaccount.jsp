@@ -45,9 +45,11 @@
                         <td>${post.user.id}</td>
                         <td>${post.created}</td>
                         <td>
+                            <ul>
                             <a href="accept/${post.id}" class="btn btn-success">Akceptuj</a>
                             <a href="../post/update/${post.id}" class="btn btn-warning">Edytuj</a>
                             <a href="#" onclick="confirmDelete(${post.id}, '${post.title}')" class="btn btn-danger">Skasuj</a>
+                            </ul>
                         </td>
                     </tr>
                 </c:forEach>
