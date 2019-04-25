@@ -1,6 +1,6 @@
 # CMS
 
-It's a simlpe content managment system (CMS) written as a final project at CodersLab - programming school.
+It's a simlpe content management system (CMS) written as a final project at CodersLab - programming school.
 Unregitered user can write an article and add comment. After registration it's possible to add new article and 
 edit user's data.
 
