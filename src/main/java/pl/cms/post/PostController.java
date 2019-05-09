@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import pl.cms.category.Category;
 import pl.cms.category.CategoryService;
 import pl.cms.comment.Comment;
@@ -18,9 +20,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.awt.print.Book;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class PostController {
@@ -36,6 +38,35 @@ public class PostController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping("/upload")
+    public String upload() {
+        return "upload";
+    }
+
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public ModelAndView upload(@RequestParam CommonsMultipartFile file, HttpSession session) {
+        String path = session.getServletContext().getRealPath("/");
+        String filename =  file.getOriginalFilename();
+
+        System.out.println(path + " " + filename);
+
+        try {
+            byte barr[] = file.getBytes();
+            BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path + "/" + filename));
+            Object o = bout;
+            bout.write(barr);
+            bout.flush();
+            bout.close();
+
+        } catch (Exception e ) {
+            System.out.println(e);
+        }
+
+        return new ModelAndView("success");
+    }
+
+
 
     @GetMapping("post/update/{id}")
     public String update(@PathVariable Long id, Model model) {

@@ -31,6 +31,11 @@
             <form:select itemValue="id" itemLabel="name" path="category.id" items="${categories}"
                          class="form-control" id="categoryId"/>
         </div>
+        <form method="POST" action="upload" enctype="multipart/form-data">
+            File to upload: <input type="file" name="file"><br />
+            Name: <input type="text" name="text"><br /> <br />
+            <input type="submit" value="Upload"> Press here to upload the file!
+        </form>
         <input type="submit" value="Zapisz" class="btn btn-primary">
     </div>
     </div>
