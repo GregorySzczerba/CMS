@@ -174,6 +174,8 @@ public class UserController {
     @GetMapping("admin/user/{id}")
     public String delete(@PathVariable Long id) {
         User user = userRepository.findUserById(id);
+        List<Post> posts = postRepository.findAllByUserId(id);
+        postRepository.deleteAll(posts);
         userRepository.delete(user);
         return "redirect:/admin/users";
     }
